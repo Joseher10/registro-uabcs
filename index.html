@@ -99,12 +99,11 @@
             text-decoration: underline;
         }
     </style>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
         <h2>Registro UABCS</h2>
-        <form id="registroForm">
+        <form id="registroForm" onsubmit="return validarFormulario(event)">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
@@ -140,7 +139,6 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirma tu contraseña" required>
                 <div class="error-message" id="errorConfirmPassword"></div>
             </div>
-            <div class="g-recaptcha" data-sitekey="6Ldz6_kqAAAAAAQV8XOi51uKmzE7Nxcghx_ilYMr"></div>
             <br>
             <div class="checkbox-container">
                 <input type="checkbox" id="terminos" name="terminos" required>
@@ -155,17 +153,34 @@
         </div>
     </div>
     <script>
-        document.getElementById('registroForm').addEventListener('submit', function(event) {
+        function validarFormulario(event) {
             event.preventDefault();
-            let recaptchaResponse = grecaptcha.getResponse();
-            if (recaptchaResponse.length === 0) {
-                alert("Por favor, verifica que no eres un robot.");
-                return;
+
+            document.getElementById('errorPassword').textContent = "";
+            document.getElementById('errorConfirmPassword').textContent = "";
+
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password.length < 6) {
+                document.getElementById('errorPassword').textContent = "La contraseña debe tener al menos 6 caracteres.";
+                return false;
             }
+
+            if (password !== confirmPassword) {
+                document.getElementById('errorConfirmPassword').textContent = "Las contraseñas no coinciden.";
+                return false;
+            }
+
             alert("¡Felicidades, ya estás registrado!");
+
             document.getElementById('registroForm').reset();
-            grecaptcha.reset();
-        });
+
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+            return true;
+        }
     </script>
 </body>
 </html>
+
