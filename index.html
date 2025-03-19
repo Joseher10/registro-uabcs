@@ -104,7 +104,7 @@
 <body>
     <div class="container">
         <h2>Registro UABCS</h2>
-        <form id="registroForm" onsubmit="return validarFormulario(event)">
+        <form id="registroForm">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
@@ -140,7 +140,7 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirma tu contraseña" required>
                 <div class="error-message" id="errorConfirmPassword"></div>
             </div>
-            <div class="g-recaptcha" data-sitekey="6Ldg5vkqAAAAAHepB76eaZNMldr7BifAZAn3pVoq"></div>
+            <div class="g-recaptcha" data-sitekey="6Ldz6_kqAAAAAAQV8XOi51uKmzE7Nxcghx_ilYMr"></div>
             <br>
             <div class="checkbox-container">
                 <input type="checkbox" id="terminos" name="terminos" required>
@@ -155,21 +155,17 @@
         </div>
     </div>
     <script>
-        function validarFormulario(event) {
+        document.getElementById('registroForm').addEventListener('submit', function(event) {
             event.preventDefault();
             let recaptchaResponse = grecaptcha.getResponse();
             if (recaptchaResponse.length === 0) {
                 alert("Por favor, verifica que no eres un robot.");
-                return false;
+                return;
             }
             alert("¡Felicidades, ya estás registrado!");
             document.getElementById('registroForm').reset();
             grecaptcha.reset();
-            return true;
-        }
+        });
     </script>
 </body>
 </html>
-
-
-
