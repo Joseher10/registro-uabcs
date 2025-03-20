@@ -162,9 +162,8 @@
                 alert("Por favor, verifica que no eres un robot.");
                 return;
             }
-            alert("¡Felicidades, ya estás registrado!");
-            document.getElementById('registroForm').reset();
-            grecaptcha.reset();
+            // Redirige a la página de bienvenida
+            window.location.href = "bienvenido.html";
         });
     </script>
 </body>
